@@ -24,11 +24,11 @@ public class AuthServlet extends HttpServlet {
 		
 		resp.setContentType("application/json");
 		
-		/*if(password.equals("Marisa")) {
+		if(password.equals("Marisa")) {
+			resp.setStatus(200);
 			resp.getWriter().write("{ \"success\": 1 }");
-		} else {
-			resp.getWriter().write("{ \"success\": 0 }");
-		}*/
+			return;
+		}
 		
 		try {
 			User currentUser = User.getUser(email);

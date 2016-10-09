@@ -33,7 +33,11 @@ public class NewGroupServlet extends HttpServlet {
 		
 		try {
 			newGroup = Group.getGroup(name);
-			newGroup.addMember(email);
+			if(User.getUser(email).getGroups().contains(name)) {
+				
+			} else {
+				newGroup.addMember(email);
+			}
 		} catch(EntityNotFoundException e) {
 			newGroup = Group.createNewGroup(name, members);
 		}
