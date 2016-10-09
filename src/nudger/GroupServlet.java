@@ -59,6 +59,9 @@ public class GroupServlet extends HttpServlet {
 			result.addProperty("email", email);
 			
 			JsonArray jArray = new JsonArray();
+			if(userGroups == null) {
+				userGroups = new ArrayList<String>();
+			}
 			for(String s : userGroups) {
 				jArray.add(s);
 			}

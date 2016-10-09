@@ -81,6 +81,9 @@ public class User {
 	
 	public void addChore(String chore) {
 		ArrayList<String> newChores = this.getChores();
+		if(newChores == null) {
+			newChores = new ArrayList<String>();
+		}
 		newChores.add(chore);
 		user.setProperty("chores", newChores);
 		datastore.put(user);
@@ -98,6 +101,9 @@ public class User {
 	
 	public void addPendingGroup(String pendingGroup) {
 		ArrayList<String> newPendingGroup = this.getPendingGroups();
+		if(newPendingGroup == null) {
+			newPendingGroup = new ArrayList<String>();
+		}
 		newPendingGroup.add(pendingGroup);
 		user.setProperty("pendingGroups", newPendingGroup);
 		datastore.put(user);
