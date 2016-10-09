@@ -53,4 +53,22 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/group/new</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ChoreAssignment</servlet-name>
+		<servlet-class>nudger.ChoreAssignmentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChoreAssignment</servlet-name>
+		<url-pattern>/group/assign</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Chore</servlet-name>
+		<servlet-class>nudger.ChoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Chore</servlet-name>
+		<url-pattern>/group/chore</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

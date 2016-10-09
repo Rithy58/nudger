@@ -3,20 +3,13 @@ package nudger;
 import java.io.IOException;
 import javax.servlet.http.*;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @SuppressWarnings("serial")
 public class AuthServlet extends HttpServlet {
-	
-	private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/plain");
 		resp.getWriter().println("Hello, world");
@@ -37,6 +30,29 @@ public class AuthServlet extends HttpServlet {
 			resp.getWriter().write("{ \"success\": 0 }");
 		}*/
 		
+		try {
+			User currentUser = User.getUser(email);
+			
+			JsonObject obj = new JsonObject();
+			
+			if(password.equals(currentUser.getPassword())) {
+				obj.addProperty("success", 1);
+				obj.addProperty("email", email);
+				resp.setStatus(200);
+			} else {
+				obj.addProperty("success", 0);
+				resp.setStatus(400);
+			}
+			
+			resp.getWriter().print(obj.toString());
+			
+		} catch(EntityNotFoundException e) {
+			resp.setStatus(400);
+			resp.getWriter().write("{ \"success\": 0 }");
+		}
+		
+		/*
+
 		Entity currentUser;
 		Key userKey = KeyFactory.createKey("User", email);
 		
@@ -54,7 +70,7 @@ public class AuthServlet extends HttpServlet {
 		} catch (EntityNotFoundException e) {
 			resp.setStatus(400);
 			resp.getWriter().write("{ \"success\": 0 }");
-		}
+		}*/
 		
 	}
 }

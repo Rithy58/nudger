@@ -12,6 +12,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class User {
 	
 	private Entity user;
+	private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	
 	public static User createNewUser(String name, String email, String password) {
 		Entity newUserEntity = new Entity("User", email);
@@ -21,6 +22,8 @@ public class User {
 		newUserEntity.setProperty("chores", new ArrayList<String>());
 		newUserEntity.setProperty("groups", new ArrayList<String>());
 		newUserEntity.setProperty("pendingGroups", new ArrayList<String>());
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(newUserEntity);
 		return new User(newUserEntity);
 	}
 	
@@ -63,31 +66,46 @@ public class User {
 	
 	public void setName(String name) {
 		user.setProperty("name", name);
+		datastore.put(user);
 	}
 	
 	public void setEmail(String email) {
 		user.setProperty("email", email);
+		datastore.put(user);
 	}
 	
 	public void setPassword(String password) {
 		user.setProperty("password", password);
+		datastore.put(user);
 	}
 	
 	public void addChore(String chore) {
 		ArrayList<String> newChores = this.getChores();
+		if(newChores == null) {
+			newChores = new ArrayList<String>();
+		}
 		newChores.add(chore);
 		user.setProperty("chores", newChores);
+		datastore.put(user);
 	}
 	
 	public void addGroup(String group) {
 		ArrayList<String> newGroups = this.getGroups();
+		if(newGroups == null) {
+			newGroups = new ArrayList<String>();
+		}
 		newGroups.add(group);
 		user.setProperty("groups", newGroups);
+		datastore.put(user);
 	}
 	
 	public void addPendingGroup(String pendingGroup) {
 		ArrayList<String> newPendingGroup = this.getPendingGroups();
+		if(newPendingGroup == null) {
+			newPendingGroup = new ArrayList<String>();
+		}
 		newPendingGroup.add(pendingGroup);
 		user.setProperty("pendingGroups", newPendingGroup);
+		datastore.put(user);
 	}
 }
