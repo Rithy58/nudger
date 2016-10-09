@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "189002795816",
+    "project_id": "firebase-nudger"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189002795816:android:86efa0404d67032e",
+        "android_client_info": {
+          "package_name": "com.idealessidealists.nudger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189002795816-08bucpn6m45ppqbag3s1nk22ojf9e4v4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idealessidealists.nudger",
+            "certificate_hash": "173D1654A17F24CC48410057EB9F7C3E5E1AA343"
+          }
+        },
+        {
+          "client_id": "189002795816-okbrb0mgt8dpgm57qr353q8m6nh6gb4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZogMm5oID5MXceJIHLOsaInbsaNq9SRc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
