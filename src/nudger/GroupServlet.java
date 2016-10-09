@@ -48,6 +48,10 @@ public class GroupServlet extends HttpServlet {
 			ArrayList<String> userGroups = currentUser.getGroups();
 			ArrayList<String> userPendingGroups = currentUser.getPendingGroups();
 			
+			if(userPendingGroups == null) {
+				userPendingGroups = new ArrayList<String>();
+			}
+			
 			JsonObject result = new JsonObject();
 			
 			result.addProperty("success", 1);

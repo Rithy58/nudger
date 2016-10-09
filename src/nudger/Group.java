@@ -12,6 +12,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class Group {
 	
 	private Entity group;
+	//private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	
 	public Group(Entity g) {
 		group = g;
@@ -20,8 +21,10 @@ public class Group {
 	public static Group createNewGroup(String name, ArrayList<String> members) {
 		Entity newGroupEntity = new Entity("Group", name);
 		newGroupEntity.setProperty("name", name);
-		newGroupEntity.setProperty("members", new ArrayList<String>());
+		newGroupEntity.setProperty("members", members);
 		newGroupEntity.setProperty("chores", new ArrayList<String>());
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(newGroupEntity);
 		return new Group(newGroupEntity);
 	}
 	

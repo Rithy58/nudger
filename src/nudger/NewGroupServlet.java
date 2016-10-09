@@ -1,6 +1,7 @@
 package nudger;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.*;
 
@@ -21,6 +22,13 @@ public class NewGroupServlet extends HttpServlet {
 		JsonObject json = (JsonObject) parser.parse(req.getReader().readLine());
 		
 		String email = json.get("email").getAsString();
+		String name = json.get("name").getAsString();
+		
+		ArrayList<String> members = new ArrayList<>();
+		
+		members.add(email);
+		
+		Group.createNewGroup(name, members);
 		
 		User currentUser;
 		
@@ -36,7 +44,7 @@ public class NewGroupServlet extends HttpServlet {
 			
 			result.addProperty("success", 1);
 			
-			
+			resp.setStatus(200);
 			resp.getWriter().write(result.toString());
 			
 			/*resp.getWriter().write("{ \"success\": 1, \"email\"" +
