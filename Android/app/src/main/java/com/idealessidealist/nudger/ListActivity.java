@@ -15,8 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.idealessidealist.nudger.connector.GoogleConnector;
-import com.idealessidealist.nudger.model.Group;
 import com.idealessidealist.nudger.model.UserService;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +93,16 @@ public class ListActivity extends AppCompatActivity {
                         return convertView;
                     }
                 });
+                joinList.setOnItemClickListener((parent, view, position, id) -> GoogleConnector.createGroup(UserService.getInstance().getUser().getEmail(), joinList.getItemAtPosition(position).toString(), new ArrayList<>())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(groupResponse -> {
+                            if (groupResponse.code() == 200) {
+                                Intent i = new Intent(this, GroupActivity.class);
+                                i.putExtra(GroupActivity.MEMBERS_EXTRA, groupResponse.body().getMembers().toArray(new String[groupResponse.body().getMembers().size()]));
+                                i.putExtra(GroupActivity.CHORES_EXTRA, groupResponse.body().getChores().toArray(new String[groupResponse.body().getChores().size()]));
+                                i.putExtra(GroupActivity.NAME_EXTRA, groupResponse.body().getName());
+                                startActivity(i);
+                            }
+                        }));
                 pending.setIndicator("Pending (" + groupListResponse.body().getPending().size() + ")");
                 pendingList.setAdapter(new ArrayAdapter<String>(this, R.layout.group_list_view, groupListResponse.body().getPending()) {
                     @NonNull

@@ -1,5 +1,6 @@
 package com.idealessidealist.nudger.connector;
 
+import com.idealessidealist.nudger.model.ChoreResponse;
 import com.idealessidealist.nudger.model.GroupList;
 import com.idealessidealist.nudger.model.GroupResponse;
 import com.idealessidealist.nudger.model.Success;
@@ -43,6 +44,12 @@ public class GoogleConnector {
     public static Observable<Response<Success>> assignChore(String email, String chore) {
         GoogleService service = retrieveService();
         return service.assignChore(new Assignment(email, chore))
+                .subscribeOn(Schedulers.io());
+    }
+
+    public static Observable<Response<ChoreResponse>> getChores(String email) {
+        GoogleService service = retrieveService();
+        return service.getChores(new Email(email))
                 .subscribeOn(Schedulers.io());
     }
 
@@ -163,6 +170,12 @@ interface GoogleService {
             "Content-Type: application/json"
     })
     Observable<Response<Success>> assignChore(@Body Assignment assignment);
+
+    @POST("group/chore")
+    @Headers({
+            "Content-Type: application/json"
+    })
+    Observable<Response<ChoreResponse>> getChores(@Body Email email);
 
 
 }

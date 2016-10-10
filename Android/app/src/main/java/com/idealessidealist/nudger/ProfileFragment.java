@@ -10,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.idealessidealist.nudger.connector.GoogleConnector;
+
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Kenny Tsui on 10/9/2016.
@@ -54,8 +57,17 @@ public class ProfileFragment extends Fragment {
         list = ButterKnife.findById(view, R.id.choresList);
         TextView userEmail = ButterKnife.findById(view, R.id.userEmail);
         userEmail.setText(user);
-        list.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, chores));
+        getChores(user);
         return view;
+    }
+
+    private void getChores(String email) {
+        GoogleConnector.getChores(email).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(chores -> {
+                    if (chores.code() == 200) {
+                        list.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, chores.body().getChores()));
+                    }
+                });
     }
 
 }
